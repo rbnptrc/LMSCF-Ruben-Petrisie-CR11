@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-brand {
+    color: rgb(149, 192, 206) !important;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: rgb(233, 208, 168) !important;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.main_header {
+    background-image: url("img/pet_cover.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    background-color: rgb(44, 21, 13);
+    opacity: 2;
+    height: 60vh;
+}
+
+.display-4 {
+    margin-top: 2em;
+}
+
+h3 {
+    text-align: center;
+    color: gray;
+}
+
+.admin-area {
+    margin-top: 5rem;
+    text-align: center;
+}
