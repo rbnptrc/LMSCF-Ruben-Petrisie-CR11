@@ -5,31 +5,16 @@ session_start();
 require_once 'db_conn11.php';
 
 // if session is not set this will redirect to login page
-if( !isset($_SESSION['user'])  && !isset($_SESSION['admin']) && !isset($_SESSION['spradmin'])) {
+if (!isset($_SESSION['spradmin'])) {
     header("Location: index.php");
     exit;
 }
-
-  /*if(isset($_SESSION['admin']) != ""){
-    header("Location: admin.php");
-    exit;
-  }
-
-  if(isset($_SESSION['spradmin']) != ""){
-    header("Location: spradmin.php");
-    exit;
-  }*/
-
-
 // select logged-in users details
-$res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
+$res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['spradmin']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
-#$userRow="";
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,7 +51,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                     <a class="nav-link" href="index.php">Log in</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="logout.php?logout">Log Out</a>
+                    <a class="nav-link" href="logout.php?logout">Log Out</a>
                 </li>
             </ul>
 
@@ -86,42 +71,52 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <header>
         <div class="jumbotron main_header">
             <h1 class="display-4">Get a Pet</h1>
+
         </div>
     </header>
 
+    <!--Content Area--->
 
-        <!--Content Area--->
-
-        <?php
+    <?php 
     require_once 'db_conn11.php';
 
-    $sql = "SELECT * FROM animals WHERE NOT aniType='small' AND aniType='large'";
+    $sql = "SELECT * FROM users";
     $res = $connect->query($sql);
+?>
 
-    //print_r($res);
+<table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>UserType</th>
+                    </tr>
+                </thead>
+                <?php
+                while ($row = $res->fetch_assoc()) : ?>
+                    <tr>
+                        <td><?= $row['id']; ?></td>
+                        <td><?= $row['userName']; ?></td>
+                        <td><?= $row['userEmail']; ?></td>
+                        <td><?= $row['userType']; ?></td>
+                        <td>
+                            <a href="deleteusers.php?deleteusers=<?= $row['id']; ?>" class="btn btn-danger" name="delete">Delete</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+    <hr>
 
 
-    ?>
-    <h3>Senior Animals</h3>
-    <div class="container-fluid">
 
-        <div class="card-group">
-            <?php while ($row = $res->fetch_assoc()) : ?>
-                <div class="col-sm-10 col-md-5 col-lg-3 mt-5">
-                    <div class="card">
-                        <img src=" <?= $row['image']; ?>" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Name:  <?= $row['name']; ?></h5>
-                            <p class="card-text">Age:  <?= $row['age']; ?></p>
-                            <p class="card-text">Description:  <?= $row['descr']; ?></p>
-                            <p class="card-text">Hobbies:  <?= $row['hobbies']; ?>'</p>
-                            <p class="card-text">Location:  <?= $row['location']; ?>'</p>
-                       </div>
-                   </div>
-               </div>
-               <?php endwhile; ?>       
-            </div>
-   </div>
+    <br>
+    <div class="border border-light p-3 mb-4">
+        <div class="text-center">
+            <a href="logout.php?logout"><button type="button" class="btn btn-danger">Log Out</button></a>
+        </div>
+    </div>
+
 
         <!-- jQuery & Bootstrap -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

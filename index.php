@@ -1,13 +1,28 @@
 <?php
 ob_start();
 session_start();
+
 require_once 'db_conn11.php';
 
 // it will never let you open index(login) page if session is set
-if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
+if ( isset($_SESSION['user' ])!="" ) {
     header("Location: home.php");
     exit;
-}
+  }
+
+
+  if(isset($_SESSION['admin']) != ''){
+    header("Location: admin.php");
+    exit;
+  }
+
+
+  if(isset($_SESSION['spradmin']) != ''){
+    header("Location: spradmin.php");
+    exit;
+  }
+
+
 
 $emailError = "";
 $passError = "";
@@ -18,7 +33,6 @@ $error = false;
 if (isset($_POST['btn-login'])) {
 
 
-    $type=$_POST['userType'];
 
     // prevent sql injections/ clear user invalid inputs
     $email = trim($_POST['userEmail']);
@@ -29,6 +43,8 @@ if (isset($_POST['btn-login'])) {
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
     // prevent sql injections / clear user invalid inputs
+
+
 
     if (empty($email)) {
         $error = true;
@@ -50,8 +66,9 @@ if (isset($_POST['btn-login'])) {
 
         
         //this needs checking again *
-        $res = $connect->query("SELECT id, userName, passw, userType FROM users WHERE userEmail='$email'");
+        $res = $connect->query("SELECT * FROM users WHERE userEmail='$email'");
         $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
         $count = mysqli_num_rows($res); // if uname/pass is correct it returns must be 1 row
 
         if ($count == 1 && $row['passw'] == $password && $row['userType'] =='admin'){
@@ -60,10 +77,15 @@ if (isset($_POST['btn-login'])) {
         } elseif ($count == 1 && $row['passw'] == $password && $row['userType'] =='user'){
             $_SESSION['user'] = $row['id'];
             header("Location: home.php");
+        }elseif ($count == 1 && $row['passw'] == $password && $row['userType'] =='spradmin'){
+            $_SESSION['spradmin'] = $row['id'];
+            header("Location: spradmin.php");
         }else {
             $errMSG = "Incorrect Credentials, Try again...";
-
         }
+
+
+  
     }
     // Close connection
     $connect->close();
@@ -149,19 +171,19 @@ if (isset($_POST['btn-login'])) {
                 <input type="password" name="passw" class="form-control" placeholder="Your Password" maxlength="15" />
                 <span class="text-danger"><?php echo $passError; ?></span>
                 <br>
-
+<!---
                 <label>UserType</label>
                 <select name="userType">
                     <option value="user">user</option>
                     <option value="admin">admin</option>
-                    <option value="spradmin">super</option>
+                    <option value="spradmin">spradmin</option>
                 </select>
-           
+--->       
                 <hr/>
                 <button type="submit" name="btn-login" class="btn btn-primary">Log In</button>
                 <hr/>
         
-            <a href="logout.php"><button type="submit" class="btn btn-danger">Log Out</button></a>
+            <a href="logout.php?logout"><button type="submit" class="btn btn-danger">Log Out</button></a>
 
         </form>
 

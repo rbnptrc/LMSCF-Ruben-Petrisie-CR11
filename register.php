@@ -1,17 +1,21 @@
 <?php
 
 
-/*ob_start();
+ob_start();
 session_start(); // start a new session or continues the previous
-if (isset($_SESSION['user'])  || isset($_SESSION['admin'])) {
+if (isset($_SESSION['user'])  && isset($_SESSION['admin'])) {
    header("Location: home.php"); // redirects to home.php
-}*/
-
+}
+if(isset($_SESSION['spradmin']) != ''){
+    header("Location: spradmin.php");
+    exit;
+  }
 include_once 'db_conn11.php';
 
 $name = "";
 $email = "";
 $pass = "";
+$userType ="";
 
 $nameError = "";
 $emailError = "";
@@ -37,6 +41,8 @@ if (isset($_POST['btn-signup'])) {
     $pass = trim($_POST['passw']);
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
+
+    $userType = ($_POST['userType']);
 
 
 
@@ -80,12 +86,19 @@ if (isset($_POST['btn-signup'])) {
 
     // UserType select
 
-
+    $name = "";
+    $email = "";
+    $pass = "";
+    $userType ="";
+    
+    $nameError = "";
+    $emailError = "";
+    $passError = "";
 
     // if there's no error, continue to signup
     if (!$error) {
 
-        $sql = "INSERT INTO users (userName, userEmail, passw) VALUES('$name','$email','$password')";
+        $sql = "INSERT INTO users (userName, userEmail, passw, userType) VALUES('$name','$email','$password', '$userType')";
         $res = mysqli_query($connect, $sql);
 
         if ($res) { //change
@@ -94,9 +107,7 @@ if (isset($_POST['btn-signup'])) {
             unset($name);
             unset($email);
             unset($pass);
-            unset($nameError);
-            unset($emailError);
-            unset($passError);
+
         } else {
             $errTyp = "danger";
             $errMSG = "Something went wrong, try again later...";
@@ -140,7 +151,7 @@ $connect->close();
                 <li class="nav-item">
                     <a class="nav-link" href="register.php">Register</a>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log in</a>
+                    <a class="nav-link" href="index.php">Log in</a>
                 </li>
             </ul>
 
@@ -160,7 +171,6 @@ $connect->close();
     <header>
         <div class="jumbotron main_header">
             <h1 class="display-4">Get a Pet</h1>
-            <a class="btn btn-primary btn-lg" href="#" role="button">See Publishers</a>
         </div>
     </header>
 
@@ -192,18 +202,17 @@ $connect->close();
             <input type="password" name="passw" class="form-control" placeholder="Enter Password" maxlength="15" value="<?php echo $pass ?>" />
             <span class="text-danger"> <?php echo $passError; ?> </span>
             <hr />
-<!--
+
             <label>UserType</label>
                 <select name="userType">
                     <option value="user">user</option>
                     <option value="admin">admin</option>
-                    <option value="spradmin">super</option>
+                    <option value="spradmin">spradmin</option>
                 </select>
---->
+
             <button type="submit" class="btn btn-block btn-primary" name="btn-signup">Register</button>
             <hr />
 
-            <a href="index.php"> <button type="submit" class="btn btn-success">Go Log in</button></a>
 
         </form>
 

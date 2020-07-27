@@ -1,0 +1,18 @@
+Admin
+userName: mainadmin 
+userEmail: admin@pet.net
+passw:741741
+
+User 
+userName: userone
+userEmail: userone@pet.net
+passw:112211
+
+userName: usertwo
+userEmail: usertwo@pet.net
+passw:223322
+
+SuperAdmin
+userName: SuperPower
+userEmail: super@pet.net
+passw:333111

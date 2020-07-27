@@ -5,10 +5,22 @@ session_start();
 require_once 'db_conn11.php';
 
 // if session is not set this will redirect to login page
-if (!isset($_SESSION['user']) || isset($_SESSION['admin'])) {
+if( !isset($_SESSION['user'])  && !isset($_SESSION['admin']) && !isset($_SESSION['spradmin'])) {
     header("Location: index.php");
     exit;
 }
+
+  /*if(isset($_SESSION['admin']) != ""){
+    header("Location: admin.php");
+    exit;
+  }
+
+  if(isset($_SESSION['spradmin']) != ""){
+    header("Location: spradmin.php");
+    exit;
+  }*/
+
+
 // select logged-in users details
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -50,7 +62,10 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                 <li class="nav-item">
                     <a class="nav-link" href="register.php">Register</a>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log in</a>
+                    <a class="nav-link" href="index.php">Log in</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="logout.php?logout">Log Out</a>
                 </li>
             </ul>
 
@@ -100,8 +115,6 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                             <p class="card-text">Description:  <?= $row['descr']; ?></p>
                             <p class="card-text">Hobbies:  <?= $row['hobbies']; ?>'</p>
                             <p class="card-text">Location:  <?= $row['location']; ?>'</p>
-                            <a href="carupdate.php?id=' . $row[" cars_id"] . '" class="btn btn-warning">Update</a>
-                           <a href="cardelete.php?id=' . $row["cars_id"] . '" class="btn btn-danger">Delete</a>
                        </div>
                    </div>
                </div>

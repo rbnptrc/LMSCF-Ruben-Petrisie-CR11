@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
 
 
     $connect->close();
-    echo $row;
+    
 }
 
 ?>
@@ -118,12 +118,15 @@ if (isset($_GET['id'])) {
                 <input type="text" name="descr" value="<?= $row['descr'] ?>">
                 <label>Hobbies</label>
                 <input type="text" name="hobbies" value="<?= $row['hobbies'] ?>">
+                <label>Image</label>
+                <input type="text" name="image" value="<?= $row['image'] ?>">
                 <label>Location</label>
                 <input type="text" name="location" value="<?= $row['location'] ?>">
 
 
 
-                <input type="submit" name="submit" class="btn btn-info">
+                <input type="submit" name="submit" class="btn btn-success">
+                <a href="admin.php"><button class='btn btn-info border border-dark' type="button">Nah, go back!</button></a>
             </form>
         </div>
         </div>

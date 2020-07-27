@@ -1,14 +1,26 @@
 <?php
-ob_start();
+#ob_start();
 session_start();
 
 require_once 'db_conn11.php';
 
 // if session is not set this will redirect to login page
-if (!isset($_SESSION['user']) || !isset($_SESSION['admin'])) {
+if( !isset($_SESSION['user'])  && !isset($_SESSION['admin']) && !isset($_SESSION['spradmin'])) {
     header("Location: index.php");
     exit;
 }
+
+  /*if(isset($_SESSION['admin']) != ""){
+    header("Location: admin.php");
+    exit;
+  }
+
+  if(isset($_SESSION['spradmin']) != ""){
+    header("Location: spradmin.php");
+    exit;
+  }*/
+
+
 // select logged-in users details
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -54,7 +66,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                     <a class="nav-link" href="index.php">Log in</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Log Out</a>
+                <a class="nav-link" href="logout.php?logout">Log Out</a>
                 </li>
             </ul>
 
@@ -65,9 +77,10 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+            <p id="result"></p>
     </nav>
 
     <!--hero-->
@@ -79,6 +92,17 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     </header>
 
     <!--Content Area--->
+<div class="try-search">
+<h4>Search it</h4>
+    <form> 
+    <input type="text" name="search" id="search">
+  </form> 
+
+  <p id="result"></p>
+  <br>
+</div>
+
+
 
     <?php
     
@@ -164,7 +188,78 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     </div>
 </div>
 
+<script>
+// Variable to hold request
+var request;
 
+// Bind to the submit event of our form
+$("#search").keyup(function(event){
+
+   // Prevent default posting of form - put here to work in case of errors
+   event.preventDefault();
+
+   // Abort any pending request
+   if (request) {
+       request.abort();
+   }
+   // setup some local variables
+   var $form = $(this);
+
+   // Let's select and cache all the fields
+   var $inputs = $form.find("input, select, button, textarea");
+
+   // Serialize the data in the form
+   var serializedData = $form.serialize();
+
+   // console.log(serializedData);
+   var search = document.getElementById("search").value;
+   if(search.length > 5){
+    $inputs.prop("disabled", true);
+
+   
+ 
+   // Fire off the request to /form.php
+   request = $.ajax({
+       url: "search.php",
+       type: "post",
+       data: serializedData 
+   });
+
+   
+
+   // Callback handler that will be called on success
+   request.done(function (response, textStatus, jqXHR){
+       console.log(response,textStatus,jqXHR)
+       // Log a message to the console
+       document.getElementById("result").innerHTML= response;
+       // console.log(response);
+   });
+
+   // Callback handler that will be called on failure
+//    request.fail(function (jqXHR, textStatus, errorThrown){
+//        // Log the error to the console
+//        console.error(
+//            "The following error occurred: "+
+//            textStatus, errorThrown
+//        );
+//    });
+
+   // Callback handler that will be called regardless
+   // if the request failed or succeeded
+   request.always(function () {
+       // Reenable the inputs
+       $inputs.prop("disabled", false);
+   })
+    /* else {
+  document.getElementById("result").innerHTML = "";
+ } */
+// search => 
+   // Let's disable the inputs for the duration of the Ajax request.
+   // Note: we disable elements AFTER the form data has been serialized.
+   // Disabled form elements will not be serialized.
+}
+});
+</script>
     <!-- jQuery & Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

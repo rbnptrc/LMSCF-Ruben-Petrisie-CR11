@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2020 at 08:58 PM
+-- Generation Time: Jul 27, 2020 at 11:31 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -45,8 +45,8 @@ CREATE TABLE `animals` (
 --
 
 INSERT INTO `animals` (`id`, `name`, `age`, `aniType`, `descr`, `hobbies`, `image`, `location`) VALUES
-(1, 'Squary', '9 Months', 'small', 'Pets in this department are becoming more and more popular with people of all ages.', 'Jumping', 'img/sm1.jpg', 'Praterstrasse 23'),
-(2, 'Crush Jr', '2 Months', 'small', 'Crush Jr will be a character in new Finding Nemo.', 'Swimming /Diving', 'img/sm2.jpg', 'Praterstrasse 23'),
+(1, 'Squary', '9 Months', 'small', 'Pets in this department are becoming more and more popular with people of all ages.', 'Jumping and nuts', 'img/sm1.jpg', 'Praterstrasse 23'),
+(2, 'Crush Jr', '2 Months', 'small', 'Crush Jr will be a character in new Finding Nemo.', 'Swimming ', 'img/sm2.jpg', 'Praterstrasse 23'),
 (3, 'Popi', '3 Months', 'small', 'The first hamsters were discovered in Syria, though they also live in Greece ext...', 'Chilling', 'img/sm3.jpg', 'Praterstrasse 23'),
 (4, 'Lizzy', '7 Months', 'small', 'seems sweet and nice, but turns out to be a complete b*tch determined to screw up', 'Climbing / Hiding', 'img/sm4.jpg', 'Praterstrasse 23'),
 (5, 'Moby', '3 Years', 'large', 'has long played an important role in the lives of humans.', 'hide & seek', 'img/lg1.jpg', 'Praterstrasse 23'),
@@ -79,7 +79,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `userName`, `userEmail`, `passw`, `userType`) VALUES
 (1, 'mainadmin', 'admin@pet.net', '6ce5d724d32bdd2d72867fc3c7c752ec386ef8a3db6e73c7c3932d41f0519987', 'admin'),
 (2, 'userone', 'userone@pet.net', '2c4dca7c5a34feb03d70447f026e9abb304cf2571e0d98a60cf937e5ff5f1512', 'user'),
-(3, 'usertwo', 'usertwo@pet.net', '4f70d7279a0bbac77b437ce77d6477b7d3d77d502d8d48b75b78e674677e3109', 'user');
+(3, 'usertwo', 'usertwo@pet.net', '4f70d7279a0bbac77b437ce77d6477b7d3d77d502d8d48b75b78e674677e3109', 'user'),
+(5, 'Mainman', 'spradmin@pet.net', '892389', 'spradmin'),
+(14, 'SuperPower', 'super@pet.net', 'be7f8ea68b683f0f50f9dd051e963d6fa818331069e00339349b9887784c875d', 'spradmin');
 
 --
 -- Indexes for dumped tables
@@ -106,13 +108,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `animals`
 --
 ALTER TABLE `animals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

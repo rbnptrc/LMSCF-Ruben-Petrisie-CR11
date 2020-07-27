@@ -10,12 +10,13 @@ if ($_POST){
     $type = $_POST['aniType'];
     $descr = $_POST['descr'];
     $hob = $_POST['hobbies'];
+    $image = $_POST['image'];
     $loc = $_POST['location'];
 
     $id = $_POST['id'];
 
 
-    $sql = "UPDATE animals SET name='$name', age='$age', aniType='$type', descr='$descr', hobbies='$hob', `location`='$loc' WHERE id= $id ";
+    $sql = "UPDATE animals SET name='$name', age='$age', aniType='$type', descr='$descr', hobbies='$hob', `image`='$image', `location`='$loc' WHERE id= $id ";
 
     if($connect->query($sql) === TRUE)
     {

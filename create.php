@@ -5,29 +5,30 @@ session_start();
 require_once 'db_conn11.php';
 
 // if session is not set this will redirect to login page
-if( !isset($_SESSION['user'])  && !isset($_SESSION['admin']) && !isset($_SESSION['spradmin'])) {
+if (!isset($_SESSION['admin'])) {
     header("Location: index.php");
     exit;
 }
 
-  /*if(isset($_SESSION['admin']) != ""){
-    header("Location: admin.php");
+/*if (!isset($_SESSION['spradmin']) !="") {
+    header("Location: index.php");
     exit;
-  }
-
-  if(isset($_SESSION['spradmin']) != ""){
-    header("Location: spradmin.php");
-    exit;
-  }*/
-
-
+}*/
 // select logged-in users details
-$res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
+$res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['admin']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
-#$userRow="";
+
+$name = "";
+$age = "";
+$type = "";
+$descr = "";
+$hob = "";
+$image = "";
+$loc = "";
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -86,43 +87,51 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <header>
         <div class="jumbotron main_header">
             <h1 class="display-4">Get a Pet</h1>
+
         </div>
     </header>
 
+    <!--Content Area--->
 
-        <!--Content Area--->
+    <br>
+<h3>Create New</h3>
+<br>
+    <div class="container">
 
-        <?php
-    require_once 'db_conn11.php';
+        <div class="row justify-content-center">
+            <form action="a_create.php" method="post">
+            <div class="form-group col-md-12">
+                
+                <label>Name</label>
+                <input type="text" name="name" value="<?= $row['name'] ?>">
+                <label>Age</label>
+                <input type="text" name="age" value="<?= $row['age'] ?>">
+                <label>Type</label>
+                <select name="aniType">
+                    <option value="<?= $row['aniType'] ?>"></option>
+                    <option value="user">small</option>
+                    <option value="admin">large</option>
+                    <option value="spradmin">senior</option>
+                </select>
+                <label>Description</label>
+                <input type="text" name="descr" value="<?= $row['descr'] ?>">
+                <label>Hobbies</label>
+                <input type="text" name="hobbies" value="<?= $row['hobbies'] ?>">
+                <label>Image</label>
+                <input type="text" name="image" value="<?= $row['image'] ?>">
+                <label>Location</label>
+                <input type="text" name="location" value="<?= $row['location'] ?>">
 
-    $sql = "SELECT * FROM animals WHERE NOT aniType='small' AND aniType='large'";
-    $res = $connect->query($sql);
+                <input type="submit" name="submit" class="btn btn-success">
+                <a href="admin.php"><button class='btn btn-info border border-dark' type="button">Nah, go back!</button></a>
+            </form>
+        </div>
+        </div>
+    </div>
 
-    //print_r($res);
-
-
-    ?>
-    <h3>Senior Animals</h3>
-    <div class="container-fluid">
-
-        <div class="card-group">
-            <?php while ($row = $res->fetch_assoc()) : ?>
-                <div class="col-sm-10 col-md-5 col-lg-3 mt-5">
-                    <div class="card">
-                        <img src=" <?= $row['image']; ?>" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Name:  <?= $row['name']; ?></h5>
-                            <p class="card-text">Age:  <?= $row['age']; ?></p>
-                            <p class="card-text">Description:  <?= $row['descr']; ?></p>
-                            <p class="card-text">Hobbies:  <?= $row['hobbies']; ?>'</p>
-                            <p class="card-text">Location:  <?= $row['location']; ?>'</p>
-                       </div>
-                   </div>
-               </div>
-               <?php endwhile; ?>       
-            </div>
-   </div>
-
+<br>
+<br>
+    
         <!-- jQuery & Bootstrap -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
