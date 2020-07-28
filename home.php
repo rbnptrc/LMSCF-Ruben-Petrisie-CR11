@@ -25,8 +25,32 @@ if( !isset($_SESSION['user'])  && !isset($_SESSION['admin']) && !isset($_SESSION
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
-
 ?>
+
+<?php
+//Search Code 2
+	$connect = mysqli_connect("localhost","root","","cr11_ruben_petadoption");
+    $output ="";
+
+	//set up
+if (isset($_POST['search'])){
+	$searchq = $_POST['search'];
+
+	$searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
+
+	$res = $connect->query("SELECT * FROM animals WHERE `name` LIKE '%name%'") ;
+	$count = mysqli_num_rows($res); 
+	if ($count == 0) {
+		$output = 'Nothing found';
+	}else {
+		while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC));
+		$name = $row['name'];
+
+		$output .= '<div> '.$name. ' </div><br>';
+	}
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -94,11 +118,11 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <!--Content Area--->
 <div class="try-search">
 <h4>Search it</h4>
-    <form> 
-    <input type="text" name="search" id="search">
+    <form action="search.php" method="post"> 
+    <input type="text" name="search" placeholder="Search here">
+    <input type="submit" value=">>"/>
   </form> 
-
-  <p id="result"></p>
+<?php print("$output");?>
   <br>
 </div>
 
