@@ -2,7 +2,8 @@
 
 require_once 'db_conn11.php';
 
-if ($_POST) {
+
+  if($_POST['id']){
    $id = $_POST['id'];
 
    $sql = "DELETE FROM users WHERE id =$id";
@@ -13,8 +14,6 @@ if ($_POST) {
     } else {
         echo "error dhu check your code again";
     }
-
-   $conn->close();
-}
+  }
 
 ?>

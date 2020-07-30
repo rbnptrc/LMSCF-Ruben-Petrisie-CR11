@@ -56,11 +56,13 @@ if ($_GET['id']) {
                         <a class="nav-link" href="general.php">General</a>
                     <li class="nav-item">
                         <a class="nav-link" href="senior.php">Senior</a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">Register</a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Log in</a>
-                    </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="admin.php">Admin</a>
+               <!--- <li class="nav-item">
+                    <a class="nav-link" href="register.php">Register</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Log in</a>
+                </li>--->
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Log Out</a>
                     </li>

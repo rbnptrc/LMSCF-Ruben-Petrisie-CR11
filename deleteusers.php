@@ -5,10 +5,12 @@ session_start();
 require_once 'db_conn11.php';
 
 // if session is not set this will redirect to login page
-if (!isset($_SESSION['spradmin'])) {
-    header("Location: index.php");
-    exit;
-}
+if( !isset($_SESSION['admin']) && !isset($_SESSION['spradmin']) && !isset($_SESSION['user'])) {
+    // echo $_SESSION['admin'] ;
+     header("Location: index.php");
+     exit;
+    }
+
 // select logged-in users details
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['spradmin']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -49,22 +51,24 @@ if ($_GET['id']) {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="general.php">General</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="senior.php">Senior</a>
+               <!---  <li class="nav-item">
+                    <a class="nav-link" href="admin.php">Admin</a>
                     <li class="nav-item">
-                        <a class="nav-link" href="general.php">General</a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="senior.php">Senior</a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">Register</a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Log in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Log Out</a>
-                    </li>
-                </ul>
+                    <a class="nav-link" href="register.php">Register</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Log in</a>
+                </li>--->
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Log Out</a>
+                </li>
+            </ul>
 
                 <span class="navbar-text px-md-5">
                     <i class="fa fa-user"></i>
@@ -98,7 +102,7 @@ if ($_GET['id']) {
 
                
                     <hr>
-                    <h3>Are You Sure?</h3>
+                    <h3>Are You Sure? The User Will be Deleted.</h3>
                     <hr>
                 <center>
                     <form action="a_deleteusers.php" method="post">

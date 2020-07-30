@@ -5,10 +5,12 @@ session_start();
 require_once 'db_conn11.php';
 
 // if session is not set this will redirect to login page
-if (!isset($_SESSION['spradmin'])) {
+if( !isset($_SESSION['admin' ]) && !isset($_SESSION['user']) && !isset($_SESSION['spradmin']) ) {
     header("Location: index.php");
     exit;
-}
+   }
+
+
 // select logged-in users details
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['spradmin']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -38,21 +40,23 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
-                    <li class="nav-item">
-                    <a class="nav-link" href="general.php">General</a>
-                    <li class="nav-item">
-                    <a class="nav-link" href="senior.php">Senior</a>
                 <li class="nav-item">
+                    <a class="nav-link" href="general.php">General</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="senior.php">Senior</a>
+               <!---  <li class="nav-item">
+                    <a class="nav-link" href="admin.php">Admin</a>
+                    <li class="nav-item">
                     <a class="nav-link" href="register.php">Register</a>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Log in</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php?logout">Log Out</a>
-                </li>
+                    <a class="nav-link" href="logout.php">Log Out</a>
+                </li>--->
             </ul>
 
             <span class="navbar-text px-md-5">
@@ -80,10 +84,13 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <?php 
     require_once 'db_conn11.php';
 
-    $sql = "SELECT * FROM users";
+    $sql = "SELECT * FROM users WHERE userType='user' OR userType='admin'";
     $res = $connect->query($sql);
 ?>
-
+        <div class="text-center">
+            <a href="logout.php?logout"><button type="button" class="btn btn-danger">Log Out</button></a>
+        </div>
+<h3>Edit Users</h3>
 <table class="table">
                 <thead>
                     <tr>
@@ -101,7 +108,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                         <td><?= $row['userEmail']; ?></td>
                         <td><?= $row['userType']; ?></td>
                         <td>
-                            <a href="deleteusers.php?deleteusers=<?= $row['id']; ?>" class="btn btn-danger" name="delete">Delete</a>
+                            <a href="deleteusers.php?id=<?= $row['id']; ?>" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>

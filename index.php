@@ -10,7 +10,7 @@ if ( isset($_SESSION['user' ])!="" ) {
     exit;
   }
 
-
+/*
   if(isset($_SESSION['admin']) != ''){
     header("Location: admin.php");
     exit;
@@ -22,11 +22,7 @@ if ( isset($_SESSION['user' ])!="" ) {
     exit;
   }
 
-
-
-$emailError = "";
-$passError = "";
-
+*/
 
 $error = false;
 
@@ -70,7 +66,7 @@ if (isset($_POST['btn-login'])) {
         $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
         $count = mysqli_num_rows($res); // if uname/pass is correct it returns must be 1 row
-
+        echo $row['userType'];
         if ($count == 1 && $row['passw'] == $password && $row['userType'] =='admin'){
             $_SESSION['admin'] = $row['id'];
             header("Location: admin.php");
@@ -88,7 +84,7 @@ if (isset($_POST['btn-login'])) {
   
     }
     // Close connection
-    $connect->close();
+    #$connect->close();
 }
 ?>
 
@@ -116,19 +112,19 @@ if (isset($_POST['btn-login'])) {
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+              <!---    <li class="nav-item active">
+                  <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
                     <li class="nav-item">
                     <a class="nav-link" href="general.php">General</a>
                     <li class="nav-item">
                     <a class="nav-link" href="senior.php">Senior</a>
-                <li class="nav-item">
-                    <a class="nav-link" href="register.php">Register</a>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Log in</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Log in</a>
+                    </li>
+                    --->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="register.php">Register</a>
             </ul>
-
             <span class="navbar-text px-md-5">
                 <i class="fa fa-user"></i>
             </span>
@@ -182,8 +178,7 @@ if (isset($_POST['btn-login'])) {
                 <hr/>
                 <button type="submit" name="btn-login" class="btn btn-primary">Log In</button>
                 <hr/>
-        
-            <a href="logout.php?logout"><button type="submit" class="btn btn-danger">Log Out</button></a>
+    
 
         </form>
 

@@ -1,6 +1,6 @@
 <?php 
-#error_reporting( ~E_DEPRECATED & ~E_NOTICE );
-#class Database {}
+error_reporting( ~E_DEPRECATED & ~E_NOTICE );
+
 $localhost = "127.0.0.1";
 $username = "root";
 $password = "";

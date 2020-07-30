@@ -10,22 +10,10 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-/*if (!isset($_SESSION['spradmin']) !="") {
-    header("Location: index.php");
-    exit;
-}*/
 // select logged-in users details
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['admin']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
-
-$name = "";
-$age = "";
-$type = "";
-$descr = "";
-$hob = "";
-$image = "";
-$loc = "";
 
 ?>
 
@@ -57,17 +45,19 @@ $loc = "";
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
-                    <li class="nav-item">
-                    <a class="nav-link" href="general.php">General</a>
-                    <li class="nav-item">
-                    <a class="nav-link" href="senior.php">Senior</a>
                 <li class="nav-item">
+                    <a class="nav-link" href="general.php">General</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="senior.php">Senior</a>
+               <!---  <li class="nav-item">
+                    <a class="nav-link" href="admin.php">Admin</a>
+                    <li class="nav-item">
                     <a class="nav-link" href="register.php">Register</a>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Log in</a>
-                </li>
+                </li>--->
                 <li class="nav-item">
-                <a class="nav-link" href="logout.php?logout">Log Out</a>
+                    <a class="nav-link" href="logout.php">Log Out</a>
                 </li>
             </ul>
 
@@ -94,46 +84,46 @@ $loc = "";
     <!--Content Area--->
 
     <br>
-<h3>Create New</h3>
-<br>
+    <h3>Create New</h3>
+    <br>
     <div class="container">
 
         <div class="row justify-content-center">
             <form action="a_create.php" method="post">
-            <div class="form-group col-md-12">
-                
-                <label>Name</label>
-                <input type="text" name="name" value="<?= $row['name'] ?>">
-                <label>Age</label>
-                <input type="text" name="age" value="<?= $row['age'] ?>">
-                <label>Type</label>
-                <select name="aniType">
-                    <option value="<?= $row['aniType'] ?>"></option>
-                    <option value="user">small</option>
-                    <option value="admin">large</option>
-                    <option value="spradmin">senior</option>
-                </select>
-                <label>Description</label>
-                <input type="text" name="descr" value="<?= $row['descr'] ?>">
-                <label>Hobbies</label>
-                <input type="text" name="hobbies" value="<?= $row['hobbies'] ?>">
-                <label>Image</label>
-                <input type="text" name="image" value="<?= $row['image'] ?>">
-                <label>Location</label>
-                <input type="text" name="location" value="<?= $row['location'] ?>">
+                <div class="form-group col-md-12">
 
-                <input type="submit" name="submit" class="btn btn-success">
-                <a href="admin.php"><button class='btn btn-info border border-dark' type="button">Nah, go back!</button></a>
+                    <label>Name</label>
+                    <input type="text" name="name">
+                    <label>Age</label>
+                    <input type="text" name="age">
+                    <label>Type</label>
+                    <select name="aniType">
+                        <option>Type</option>
+                        <option value="user">small</option>
+                        <option value="admin">large</option>
+                        <option value="spradmin">senior</option>
+                    </select>
+                    <label>Description</label>
+                    <input type="text" name="descr">
+                    <label>Hobbies</label>
+                    <input type="text" name="hobbies">
+                    <label>Image</label>
+                    <input type="text" name="image">
+                    <label>Location</label>
+                    <input type="text" name="location">
+
+                    <input type="submit" name="submit" value="Submit" class="btn btn-success">
+                    <a href="admin.php"><button class='btn btn-info border border-dark' type="button">Nah, go back!</button></a>
             </form>
         </div>
-        </div>
+    </div>
     </div>
 
-<br>
-<br>
-    
-        <!-- jQuery & Bootstrap -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <br>
+    <br>
+
+    <!-- jQuery & Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>

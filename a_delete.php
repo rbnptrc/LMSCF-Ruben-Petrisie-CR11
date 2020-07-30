@@ -14,7 +14,7 @@ if ($_POST) {
         echo "error dhu check your code again";
     }
 
-   $conn->close();
 }
+$connect->close();
 
 ?>

@@ -3,23 +3,12 @@
 
 ob_start();
 session_start(); // start a new session or continues the previous
-if (isset($_SESSION['user'])  && isset($_SESSION['admin'])) {
+if (isset($_SESSION['user']) !=""){
    header("Location: home.php"); // redirects to home.php
 }
-if(isset($_SESSION['spradmin']) != ''){
-    header("Location: spradmin.php");
-    exit;
-  }
+
 include_once 'db_conn11.php';
 
-$name = "";
-$email = "";
-$pass = "";
-$userType ="";
-
-$nameError = "";
-$emailError = "";
-$passError = "";
 
 $error = false;
 if (isset($_POST['btn-signup'])) {
@@ -41,9 +30,6 @@ if (isset($_POST['btn-signup'])) {
     $pass = trim($_POST['passw']);
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
-
-    $userType = ($_POST['userType']);
-
 
 
     // basic name validation
@@ -84,21 +70,10 @@ if (isset($_POST['btn-signup'])) {
     // password hashing for security
     $password = hash('sha256', $pass);
 
-    // UserType select
-
-    $name = "";
-    $email = "";
-    $pass = "";
-    $userType ="";
-    
-    $nameError = "";
-    $emailError = "";
-    $passError = "";
-
     // if there's no error, continue to signup
     if (!$error) {
 
-        $sql = "INSERT INTO users (userName, userEmail, passw, userType) VALUES('$name','$email','$password', '$userType')";
+        $sql = "INSERT INTO users (userName, userEmail, passw) VALUES('$name','$email','$password')";
         $res = mysqli_query($connect, $sql);
 
         if ($res) { //change
@@ -116,6 +91,7 @@ if (isset($_POST['btn-signup'])) {
 }
 // Close connection
 $connect->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -141,7 +117,10 @@ $connect->close();
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">Log in</a>
+            </li>
+          <!---  <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
                     <li class="nav-item">
@@ -150,16 +129,13 @@ $connect->close();
                     <a class="nav-link" href="senior.php">Senior</a>
                 <li class="nav-item">
                     <a class="nav-link" href="register.php">Register</a>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Log in</a>
-                </li>
             </ul>
 
             <span class="navbar-text px-md-5">
                 <i class="fa fa-user"></i>
                 
             </span>
-            </ul>
+            </ul>--->
 
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -178,7 +154,7 @@ $connect->close();
     <!--content section--->
     <div class="container">
 
-        <form method="post" accept-charset="utf-8">
+        <form method="post"action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"  autocomplete="off">
 
             <h2>Register</h2>
             <hr />
@@ -202,14 +178,14 @@ $connect->close();
             <input type="password" name="passw" class="form-control" placeholder="Enter Password" maxlength="15" value="<?php echo $pass ?>" />
             <span class="text-danger"> <?php echo $passError; ?> </span>
             <hr />
-
+<!---
             <label>UserType</label>
                 <select name="userType">
                     <option value="user">user</option>
                     <option value="admin">admin</option>
                     <option value="spradmin">spradmin</option>
                 </select>
-
+--->
             <button type="submit" class="btn btn-block btn-primary" name="btn-signup">Register</button>
             <hr />
 
