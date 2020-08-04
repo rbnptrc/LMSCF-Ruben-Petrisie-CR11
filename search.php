@@ -1,40 +1,52 @@
 <?php
 	$connect = mysqli_connect("localhost","root","","cr11_ruben_petadoption");
-$output ="";
+
 
 	//set up
-if (isset($_POST['search'])){
-	$searchq = $_POST['search'];
 
-	$searchq = preg_replace("#[^0-9a-z]#i","", $searchq);
 
-	$res = $connect->query("SELECT * FROM animals WHERE `name` LIKE '%name%'") ;
-	$count = mysqli_num_rows($res); 
-	if ($count == 0) {
-		$output = 'Nothing found';
-	}else {
-		while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC));
-		$name = $row['name'];
-
-		$output .= '<div> '.$name. ' </div><br>';
-	}
-}
-
-/*
 	$search = $_POST["search"];
 	// $search = isset($_POST["search"]) ? $_POST["search"] : "null"
 
-	$sql = "SELECT * FROM animals WHERE `name` LIKE '%$search%'";
+	$sql = "SELECT * FROM animals WHERE `name` LIKE '%$search%'
+	OR aniType LIKE '%$search%' OR hobbies LIKE '%$search%'";
 
 	$result = mysqli_query($connect, $sql);
     
     if($result->num_rows == 0){
-		echo "Nothing Found";
-	}else
-	 {
-		echo "try again";
+		echo "No result";
+	}elseif($result->num_rows == 1){
+		$row = $result->fetch_assoc();
+		echo '
+    
+            <div class="card col-3 mt-3 p-2">
+                <img class="card-img-top" src="'.$row["image"].'" style="width:100%; height:15vw;">
+                <div class="card-body">
+                  <h5 class="card-title ">'.$row["name"].'</h5>
+                  <p class="card-text">Age: '.$row["age"].'</p>
+                  <p class="card-text">Type: '.$row["aniType"].'</p>
+                  <p class="card-text">Hobby: '.$row["hobbies"].'</p>
+                  <p class="card-text">City: '.$row["location"].'</p>
+                </div>
+            </div>
+    
+    ';
+	}else {
+		$rows = $result->fetch_all(MYSQLI_ASSOC);
+		foreach ($rows as $row) {
+			echo '
+    
+            <div class="card col-3 mt-3 p-2">
+                <img class="card-img-top" src="'.$row["image"].'" style="width:100%; height:15vw;">
+                <div class="card-body">
+                  <h5 class="card-title ">'.$row["name"].'</h5>
+                  <p class="card-text">Age: '.$row["age"].'</p>
+                  <p class="card-text">Type: '.$row["aniType"].'</p>
+                  <p class="card-text">Hobby: '.$row["hobbies"].'</p>
+                  <p class="card-text">City: '.$row["location"].'</p>
+                </div>
+            </div> ';
+		}
 	}
-*/
 ?>
 
-<?php print("$output");?>

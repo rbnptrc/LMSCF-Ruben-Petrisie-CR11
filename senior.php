@@ -10,16 +10,6 @@ if( !isset($_SESSION['user'])  && !isset($_SESSION['admin']) && !isset($_SESSION
     exit;
 }
 
-  /*if(isset($_SESSION['admin']) != ""){
-    header("Location: admin.php");
-    exit;
-  }
-
-  if(isset($_SESSION['spradmin']) != ""){
-    header("Location: spradmin.php");
-    exit;
-  }*/
-
 
 // select logged-in users details
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
